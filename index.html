@@ -8,19 +8,30 @@
 
 <body>
     <div id="mainHolder">
-        <h1 id="currColor"> Red </h1> </div>
+        <h1 id="currColor"> Red </h1> 
+    </div>
+    
+    <div id="paletteHolder">
+        <h2> Saved Colors </h2>
+    </div>
     <script>
         'use strict'
         //let prevColor = '';
         let place = 0;
         let colors = [];
+        let savedColors = [];
         let currColor = '';
+        
         let body;
+        let palette;
         let colorLabel;
         
         let init = function () {
             body = document.querySelector('body');
             colorLabel = document.getElementById('currColor');
+            
+            palette = document.getElementById('paletteHolder');
+            
             controls();
             getColor();
         }
@@ -64,9 +75,25 @@
                 lighten(colors[place][0], colors[place][1], colors[place][2]);
                 //place++;
                break;
+            case 102:
+                saveColor();
+                break;
             }
             
             //console.log(place);
+        }
+        
+        let saveColor = function () {
+            savedColors.push(colors[place]);
+            updatePalette();
+            console.log('saveColor ran');
+        }
+        
+        let updatePalette = function() {
+            palette.innerHTML = '';
+            for (let i = 0; i < savedColors.length; i++) {
+                palette.innerHTML += "<button class='paletteBtn' style='background-color: rgb(" +  savedColors[i][0] + "," + savedColors[i][1] + "," + savedColors[i][2] + ");'> </button>" 
+            }
         }
         
         let getColor = function () {
@@ -142,9 +169,11 @@
             body.style.backgroundColor = 'rgb(' + redVal + ',' + greenVal + ',' + blueVal + ')';
             colorLabel.innerHTML = 'rgb(' + redVal + ',' + greenVal + ',' + blueVal + ')';
         }
+        
         let randomInt = function (min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
+        
         window.onload = init();
     </script>
 </body>
