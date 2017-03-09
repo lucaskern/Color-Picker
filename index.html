@@ -24,6 +24,7 @@
         
         let body;
         let palette;
+        let swatch;
         let colorLabel;
         
         let init = function () {
@@ -31,6 +32,9 @@
             colorLabel = document.getElementById('currColor');
             
             palette = document.getElementById('paletteHolder');
+            swatch = document.getElementById('')
+            
+            
             
             controls();
             getColor();
@@ -40,6 +44,14 @@
             body.onkeypress = function (e) {
                 keyPress(e.keyCode);
                 console.log(e.keyCode);
+            }
+            
+            let swatches = document.getElementsByClassName('paletteBtn');
+            
+            for (let i = 0; i < swatches.length; i++) {
+                swatches.item(i).onclick = function (e) {
+                    deleteSwatch(i);
+                }
             }
         }
         
@@ -94,6 +106,13 @@
             for (let i = 0; i < savedColors.length; i++) {
                 palette.innerHTML += "<button class='paletteBtn' style='background-color: rgb(" +  savedColors[i][0] + "," + savedColors[i][1] + "," + savedColors[i][2] + ");'> </button>" 
             }
+            
+            controls();
+        }
+        
+        let deleteSwatch = function(place) {
+            savedColors.splice(place, 1);
+            updatePalette();
         }
         
         let getColor = function () {
