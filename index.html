@@ -55,6 +55,7 @@
             }
         }
         
+        //handle key controls
         let keyPress = function (keyCode) {
             
             switch (keyCode) {
@@ -95,12 +96,14 @@
             //console.log(place);
         }
         
+        //add current color to saved array and update palette
         let saveColor = function () {
             savedColors.push(colors[place]);
             updatePalette();
-            console.log('saveColor ran');
+            //console.log('saveColor ran');
         }
         
+        //redraw saved colors
         let updatePalette = function() {
             palette.innerHTML = '';
             for (let i = 0; i < savedColors.length; i++) {
@@ -110,11 +113,13 @@
             controls();
         }
         
+        //delete swatch based on array place passed in
         let deleteSwatch = function(place) {
             savedColors.splice(place, 1);
             updatePalette();
         }
         
+        //generate random color
         let getColor = function () {
             let redVal = randomInt(0, 255);
             let greenVal = randomInt(0, 255);
@@ -125,9 +130,10 @@
             colors[place] = [redVal, greenVal, blueVal];
             setColor();
             
-            console.log(colors);
+            //console.log(colors);
         }
         
+        //darken color by 20%
         let tint = function(red, green, blue) {
             if (red >= 255) {
                 red = 255;
@@ -160,6 +166,7 @@
             setColor();
         }
         
+        //lighten by 20%
         let lighten = function(red, green, blue) {
             if (red < 255) {
                 red = Math.round(red / .8);
@@ -180,6 +187,7 @@
             setColor();
         } 
         
+        //set bg color and reset label with current color
         let setColor = function () {
             let redVal = colors[place][0];
             let greenVal = colors[place][1];
@@ -189,6 +197,7 @@
             colorLabel.innerHTML = 'rgb(' + redVal + ',' + greenVal + ',' + blueVal + ')';
         }
         
+        //generate random int
         let randomInt = function (min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
