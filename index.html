@@ -17,7 +17,8 @@
     <script>
         'use strict'
         //let prevColor = '';
-        let place = 0;
+        let place = 1;
+        let colorNum = 1;
         let colors = [];
         let savedColors = [];
         let currColor = '';
@@ -38,12 +39,13 @@
             
             controls();
             getColor();
+            setColor();
         }
         
         let controls = function () {
             body.onkeypress = function (e) {
                 keyPress(e.keyCode);
-                console.log(e.keyCode);
+                //console.log(e.keyCode);
             }
             
             let swatches = document.getElementsByClassName('paletteBtn');
@@ -51,6 +53,7 @@
             for (let i = 0; i < swatches.length; i++) {
                 swatches.item(i).onclick = function (e) {
                     deleteSwatch(i);
+                    
                 }
             }
         }
@@ -59,21 +62,23 @@
         let keyPress = function (keyCode) {
             
             switch (keyCode) {
-            case 32:
-                colors.push(currColor);
+            //Space : new color
+            case 32:    
                 place++;
-                getColor('new');
-                    
+                getColor();
+                
                 //console.log("space");
                 break;
+            // Left: Move back
             case 97:
-                if(place > 0) {
+                if(place > 1) {
                     place--;
                     setColor();
                 }
                     
                 //console.log("back");
                 break;
+            //Right: Move forward
             case 100:
                 if(place < colors.length - 1) {
                     place++;
@@ -92,6 +97,8 @@
                 saveColor();
                 break;
             }
+            
+            setColor();
             
             //console.log(place);
         }
@@ -117,6 +124,7 @@
         let deleteSwatch = function(place) {
             savedColors.splice(place, 1);
             updatePalette();
+            console.log(colors);
         }
         
         //generate random color
@@ -128,9 +136,11 @@
             currColor = 'rgb(' + redVal + ',' + greenVal + ',' + blueVal + ')';
   
             colors[place] = [redVal, greenVal, blueVal];
-            setColor();
+            //setColor();
             
-            //console.log(colors);
+            colorNum++;
+            
+            console.log(colors);
         }
         
         //darken color by 20%
@@ -163,7 +173,7 @@
             colors[place][1] = green;
             colors[place][2] = blue;
             
-            setColor();
+            //setColor();
         }
         
         //lighten by 20%
@@ -184,7 +194,7 @@
             colors[place][1] = green;
             colors[place][2] = blue;
             
-            setColor();
+            //setColor();
         } 
         
         //set bg color and reset label with current color
