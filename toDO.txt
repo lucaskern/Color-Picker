@@ -2,7 +2,7 @@ Functionality
 	make tints and shades not a part of the main color array
 	save palettes locally
 	Complementary color generation
-	Jump to end of array on new color gen
+	*Jump to end of array on new color gen
 		fixes label errors
 	make a bar or visual element for all colors, easier to navigate
 	Hex options		
