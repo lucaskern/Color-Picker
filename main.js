@@ -6,7 +6,8 @@ window.onload = function() {
     let colors = [];
     let savedColors = [];
     let currColor = '';
-
+    let rgbVal = '';
+  
     let body;
     let palette;
     let swatch;
@@ -14,15 +15,21 @@ window.onload = function() {
 
     let init = function () {
       body = document.querySelector('body');
+      $("#currColor h1").fadeIn("slow");
       colorLabel = document.getElementById('currColor');
 
       palette = document.getElementById('paletteHolder');
       swatch = document.getElementById('');
-
+      
+      //intro();
       controls();
       controlBar();
       getColor();
       setColor();
+    }
+    
+    let intro = function() {
+      
     }
     
     let controlBar = function() {
@@ -56,7 +63,8 @@ window.onload = function() {
 
       for (let i = 0; i < swatches.length; i++) {
         swatches.item(i).onclick = function (e) {
-          deleteSwatch(i);
+          //deleteSwatch(i);
+          copyToClipboard(i);
         }
       }
     }
@@ -122,8 +130,10 @@ window.onload = function() {
     //redraw saved colors
     let updatePalette = function () {
       palette.innerHTML = '';
+      
       for (let i = 0; i < savedColors.length; i++) {
-        palette.innerHTML += "<button class='paletteBtn' style='background-color: rgb(" + savedColors[i][0] + "," + savedColors[i][1] + "," + savedColors[i][2] + ");'> </button>"
+        let rgbVal = "rgb(" + savedColors[i][0] + "," + savedColors[i][1] + "," + savedColors[i][2] + ")";
+        palette.innerHTML += "<button class='paletteBtn' title='" + rgbVal + "' style='background-color:" + rgbVal + ";'> </button>"
       }
 
       controls();
@@ -134,6 +144,17 @@ window.onload = function() {
       savedColors.splice(place, 1);
       updatePalette();
       console.log(colors);
+    }
+    
+    let copyToClipboard = function(element) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).prop('title')).select();
+      console.log("copied" + $(element).prop("title"));
+      document.execCommand("copy");
+      $temp.remove();
+      
+      
     }
 
     //generate random color
@@ -154,6 +175,7 @@ window.onload = function() {
 
     //darken color by 20%
     let tint = function () {
+      
       let red = colors[place][0];
       let green = colors[place][1];
       let blue = colors[place][2];
@@ -229,5 +251,5 @@ window.onload = function() {
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    window.onload = init();
+    init();
 }
